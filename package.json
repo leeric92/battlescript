@@ -9,6 +9,7 @@
     "Eric Le <hle2806@uw.edu>"
   ],
   "engines": {
+    "node": "^0.12.x",
     "npm": "2.11.x",
     "bower": "1.4.1"
   },
