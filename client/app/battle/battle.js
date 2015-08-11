@@ -83,6 +83,10 @@ angular.module('battlescript.battle', [])
   };
 
   // var socket = io.connect('http://localhost:8000');
+
+  //IMPORTANT TO GET SOCKET RUNNING IN HEROKU
+  var socket = io.connect();
+  // var socket = io('localhost:8000', {query: "username=" + $scope.playerOne});
   var socket = io('//enigmatic-eyrie-6604.herokuapp.com/#/battle',{query: "username=" + $scope.playerOne});
 
   // Initializes the editors
