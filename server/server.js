@@ -7,17 +7,30 @@ var mongoose = require('mongoose');
 var app = express();
 var server = require('http').Server(app);
 
+var uristring = 
+process.env.MONGOLAB_URI || 
+process.env.MONGOHQ_URL || 
+'mongodb://localhost/battlescript';
+
+mongoose.connect(uristring, function (err, res) {
+    if (err) { 
+        console.log ('ERROR connecting to: ' + uristring + '. ' + err);
+    } else {
+        console.log ('Succeeded connected to: ' + uristring);
+    }
+});
+
 
 var handler = require('./config/socketHandler.js')
 
-mongoose.connect('mongodb://localhost/battlescript'); // connect to mongo database named
+// mongoose.connect('mongodb://localhost/battlescript'); // connect to mongo database named
 
 // configure our server with all the middleware and and routing
 require('./config/middleware.js')(app, express);
 
 // export our app for testing and flexibility, required by index.js
 
-server.listen(8000);
+server.listen(process.env.PORT || 8000);
 // Declare io for the socket... Just creating an instance of the sokcet library
 var io = require('socket.io')(server);
 
