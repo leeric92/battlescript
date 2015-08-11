@@ -47,10 +47,23 @@ angular.module('battlescript.services', [])
   };
 
   // signs out users
-  var signout = function () {
+  var signout = function (user) {
     $window.localStorage.setItem('username', undefined);
     $window.localStorage.removeItem('battlepro');
     $location.path('/signin');
+
+    console.log('this is user!!!', user)
+    console.log('inside signout factory')
+    
+    return $http({
+      method: 'POST',
+      url: '/api/users/logout',
+      data: user
+    })
+    .then(function (resp) {
+      return resp.data.token;
+    });
+
   };
 
   // return all funcs as an obj

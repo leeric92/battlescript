@@ -85,5 +85,20 @@ module.exports = {
           next(error);
         });
     }
+  },
+
+  signout: function (req, res, next){
+      console.log("this is req.body",req.body);
+      var username = req.body.username;
+      var findUser = Q.nbind(User.findOne, User);
+      
+      findUser({username: username})
+        .then(function (user) {
+          console.log('THIS IS USER', user)
+          var username = user.username;
+          console.log("this is username", username);
+          delete currentUsers[username];
+          console.log(">>>> when log out",currentUsers)
+        });
   }
 };
