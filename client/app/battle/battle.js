@@ -87,8 +87,11 @@ angular.module('battlescript.battle', [])
   //IMPORTANT TO GET SOCKET RUNNING IN HEROKU
   var socket = io.connect();
   // var socket = io('localhost:8000', {query: "username=" + $scope.playerOne});
-  var socket = io('//enigmatic-eyrie-6604.herokuapp.com/#/battle',{query: "username=" + $scope.playerOne});
-
+  if (process.env.NODE_ENV === 'production') {
+    var socket = io('//enigmatic-eyrie-6604.herokuapp.com/#/battle',{query: "username=" + $scope.playerOne});
+  }else{
+    ar socket = io('localhost:8000',{query: "username=" + $scope.playerOne});
+  }
   // Initializes the editors
   var editor1 = ace.edit("editor1");
   editor1.setTheme("ace/theme/monokai");
