@@ -1,17 +1,20 @@
-var rooms = {};
-var count = 0;
+var rooms = {
+  storage: {},
+  roomCount: 0
+};
 var totalInRoom = 2;
 
-var roomSet = function(){
+var Room = function(){
   var roomInstance = {};
-
+  
+  roomInstance.users =[];
   roomInstance.members = 0;
-  roomInstance.maxLen = totalInRoom;
-  roomInstance.count = count;
+  roomInstance.maxOccupancy = totalInRoom;
+  roomInstance.id = rooms.roomCount;
 
 
   roomInstance.needsMember = function(){
-    if (this.members < this.maxLen) {
+    if (this.members < this.maxOccupancy) {
       return true;
     } else {
       return false;
@@ -22,47 +25,51 @@ var roomSet = function(){
 }
 
 var createRoom = function(){
-  var newRoom = new roomSet();
-  save(newRoom);
-  count++;
+  var newRoom = Room();
+  updateRooms(newRoom);
+  rooms.roomCount += 1;
   return newRoom;
 }
 
 
-var save = function(room){
-  rooms[room.count] = room;
+var updateRooms = function(room){
+  rooms.storage[room.id] = room;
 };
 
 var getOpenRoom = function(){
-  for (var key in rooms) {
-    if (rooms[key].needsMember()){
-      return rooms[key];
+  console.log("STORAGE: ", rooms.storage);
+  for (var id in rooms.storage) {
+    if (rooms.storage[id].needsMember()){
+      console.log("FOUND A 1-PERSON ROOM");
+      return rooms.storage[id];
     }
   }
-
+  console.log("DIDNT FIND A SUITABLE ROOM");
   return null;
 }
 
-var removeRoom = function(key){
-  delete rooms[key];
+var removeRoom = function(id){
+  console.log("DELETING ROOM");
+  delete rooms.storage[id];
 }
 
 var createOrGetRoom = function(){
-  if(getOpenRoom()){
-    var returnVal = getOpenRoom();
-    returnVal.members++;
-    return returnVal;
+  var openRoom = getOpenRoom();
+  if(!openRoom){ // returns null if there are no open rooms
+    console.log("CREATING A NEW ROOM");
+    var openRoom = createRoom();
   } else {
-    var returnVal = createRoom();
-    returnVal.members++;
-    return returnVal;
+    console.log("FETCHED AN OPEN ROOM");
   }
+  openRoom.members++;
+  return openRoom;
 }
 
 
 
 module.exports.createOrGetRoom = createOrGetRoom;
-module.exports.save = save;
+module.exports.updateRooms = updateRooms;
 module.exports.removeRoom = removeRoom;
+module.exports.rooms = rooms;
 
 

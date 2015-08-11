@@ -10,6 +10,7 @@
   ],
   "license": "MIT",
   "dependencies": {
+    "angular-ui-router": "^0.2.15",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.4.3",
     "dotenv": "^1.2.0",

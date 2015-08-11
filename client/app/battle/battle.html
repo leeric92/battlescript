@@ -24,7 +24,7 @@
   </div>
 </div>
 
-<main class="main">
+<main ng-controller="BattleController" class="main">
   <div class="container">
     
     <h1>It's duel time!</h1>
@@ -38,11 +38,11 @@
         </div>
       </div>
       <div class="grid__item grid__item--50">
-        <h3>player 1</h3>
+        <h3>{{ playerOne }}</h3>
         <div id="editor1" class="editor"></div>
       </div>
       <div class="grid__item grid__item--25">
-        <h3>player 2</h3>
+        <h3>{{ playerTwo }}</h3>
         <div id="editor2" class="editor editor--opponent"></div>
       </div>
     </div>

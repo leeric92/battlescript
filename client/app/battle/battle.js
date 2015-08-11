@@ -1,6 +1,10 @@
 angular.module('battlescript.battle', [])
 
 .controller('BattleController', function($scope, Battle){
+  $scope.playerOne = window.localStorage.getItem('username');
+  $scope.playerTwo = "Waiting for 2nd player"
+
+
   $scope.battle;
   $scope.battleDescription = null;
   $scope.battleProjectId = null;
@@ -23,7 +27,7 @@ angular.module('battlescript.battle', [])
   };
 
   // var socket = io.connect('http://localhost:8000');
-  var socket = io.connect('http://localhost:8000');
+  var socket = io('http://localhost:8000', {query: "username=" + $scope.playerOne});
 
   // Initializes the editors
   var editor1 = ace.edit("editor1");
@@ -36,8 +40,22 @@ angular.module('battlescript.battle', [])
   editor2.setReadOnly(true);
 
   editor1.getSession().on('change', function(e) {
-    console.log(editor1.getValue());
+    //console.log(editor1.getValue());
     socket.emit('textChange', editor1.getValue());
+  });
+
+  socket.emit('getUsers');
+  socket.on('userList', function(userArray){
+    // THIS WILL ONLY WORK FOR TWO USERS RIGHT NOW
+    // loop over array looking for other users
+    userArray.forEach(function(name){
+      if(name !== $scope.playerOne){
+        $scope.playerTwo = name;    
+        $scope.$apply();
+      }
+    });
+    // set other user to player2 variable
+    // if only one user, don't change player 2
   });
 
   socket.on('updateEnemy', function(text){
@@ -49,12 +67,12 @@ angular.module('battlescript.battle', [])
   // So, it emits the event disconnect user
   $scope.$on('$routeChangeStart', function(event, next, current) {
     console.log('routeChangeStart');
-    socket.emit('disconnectedClient');
+    socket.emit('disconnectedClient', {username: $scope.playerOne});
   });
 
   // This does the same, for refresh. Now go to socket handler for more info
   window.onbeforeunload = function(e) {
-    socket.emit('disconnectedClient');
+    socket.emit('disconnectedClient', {username: $scope.playerOne});
   };
 
 

@@ -21,6 +21,8 @@ angular.module('battlescript.services', [])
       data: user
     })
     .then(function (resp) {
+      // Saving a global username to be used throughout app
+      $window.localStorage.setItem('username', resp.config.data.username);
       return resp.data.token;
     });
   };
@@ -33,6 +35,8 @@ angular.module('battlescript.services', [])
       data: user
     })
     .then(function (resp) {
+      // Saving a global username to be used throughout app
+      $window.localStorage.setItem('username', resp.config.data.username);
       return resp.data.token;
     });
   };
@@ -44,6 +48,7 @@ angular.module('battlescript.services', [])
 
   // signs out users
   var signout = function () {
+    $window.localStorage.setItem('username', undefined);
     $window.localStorage.removeItem('battlepro');
     $location.path('/signin');
   };
