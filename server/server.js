@@ -25,7 +25,8 @@ module.exports = app;
 
 // For handling various sockets, goto socket handler in config js
 io.on('connection', function(socket){
-  handler(socket);
+  console.log("query ", socket.handshake.query);
+  handler(socket, io);
 });
 
 
