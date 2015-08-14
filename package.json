@@ -15,6 +15,7 @@
     "crypto": "0.0.3",
     "dotenv": "^1.2.0",
     "express": "^4.13.2",
+    "bower": "^1.4.1",
     "jwt-simple": "^0.2.0",
     "mongoose": "^4.1.0",
     "morgan": "^1.1.1",
@@ -31,5 +32,17 @@
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^2.0.4",
     "gulp-util": "^3.0.6"
-  }
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "bower install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@heroku.com:enigmatic-eyrie-6604.git"
+  },
+  "cacheDirectories": [
+    "node_modules",
+    "bower_components"
+  ]
 }
