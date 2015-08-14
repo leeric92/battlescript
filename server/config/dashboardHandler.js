@@ -1,5 +1,5 @@
 // requirements
-var BattleController = require('../battles/BattleController');
+var BattleController = require('../battles/battleController');
 
 var socketList = {};
 
