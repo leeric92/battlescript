@@ -1,6 +1,6 @@
 angular.module('battlescript.dashboard', [])
 
-.controller('DashboardController', function ($scope, $timeout, Sockets, Dashboard) {
+.controller('DashboardController', function ($scope, $timeout, Sockets, Dashboard, Auth) {
   // scope.username always refers to the curreng logged in user
   // 
   // TODO: extract this into the global set up, so we don't have to keep
@@ -39,18 +39,20 @@ angular.module('battlescript.dashboard', [])
 
   var socket = Sockets.createSocket(['username=nick', 'handler=dashboard']);
 
-  $scope.$on('$routeChangeStart', $scope.logout);
+  $scope.$on('$routeChangeStart', $scope.disconnect);
 
   // This does the same, for refresh. Now go to socket handler for more info
   window.onbeforeunload = function(e) {
-    $scope.logout();
+    $scope.disconnect();
   };
   
   // Logout on back button
   window.addEventListener("hashchange", $scope.logout)
 
-  $scope.logout = function(){
+  $scope.disconnect = function(){
+    console.log('logout');
     socket.emit('userLoggedOut');
+    Auth.signout();
   };
 
   ////////////////////////////////////////////////////////////

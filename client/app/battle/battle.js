@@ -1,6 +1,6 @@
 angular.module('battlescript.battle', [])
 
-.controller('BattleController', function($scope, $timeout, Battle) {
+.controller('BattleController', function($scope, $timeout, Battle, Auth) {
   
   ////////////////////////////////////////////////////////////
   // init players
@@ -55,9 +55,12 @@ angular.module('battlescript.battle', [])
   // Logout on back button
   window.addEventListener("hashchange", $scope.logout)
 
-  $scope.logout = function(){
+  $scope.disconnect = function(){
+    console.log('logging out');
     socket.emit('updateUsers');
     socket.emit('disconnectedClient', {username: $scope.playerOne});
+    socket.disconnect();
+    Auth.signout();
   };
 
 
@@ -269,7 +272,6 @@ angular.module('battlescript.battle', [])
   ////////////////////////////////////////////////////////////
 
   $scope.attemptBattle = function($event) {
-    $event.preventDefault();
 
     $scope.playerOneButtonAttempt = 'Attempting...';
 

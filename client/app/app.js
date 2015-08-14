@@ -99,7 +99,7 @@ angular.module('battlescript', [
   var link = function(scope, element, attrs) {
     element.bind('click', function(e) {
       e.preventDefault();
-      scope.$parent.$apply(attrs.logout);
+      scope.$parent.$apply(attrs.disconnect);
     });
   };
 
