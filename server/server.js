@@ -6,13 +6,26 @@ var express = require('express');
 var mongoose = require('mongoose');
 var app = express();
 var server = require('http').Server(app);
-mongoose.connect('mongodb://localhost/battlescript');
+// mongoose.connect('mongodb://localhost/battlescript');
+
+var uristring = 
+process.env.MONGOLAB_URI || 
+process.env.MONGOHQ_URL || 
+'mongodb://localhost/battlescript';
+
+mongoose.connect(uristring, function (err, res) {
+    if (err) { 
+        console.log ('ERROR connecting to: ' + uristring + '. ' + err);
+    } else {
+        console.log ('Succeeded connected to: ' + uristring);
+    }
+});
 
 // configure our server with all the middleware and and routing
 require('./config/middleware.js')(app, express);
 
 // listen on port 8000
-server.listen(8000);
+server.listen(process.env.PORT || 8000);
 
 ////////////////////////////////////////////////////////////
 // init socket stuff
