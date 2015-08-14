@@ -137,7 +137,12 @@ angular.module('battlescript.services', [])
   var createSocket = function(route, params) {
     console.log('attempt to create');
     var query = params.join('&');
-    return io.connect('http://localhost:8000/#/' + route, {
+
+    //////////////////////////////////////////
+    //HAVE TO CHANGE THIS TO GET HEROKU TO WORK
+    //////////////////////////////////////////
+
+    return io.connect('enigmatic-eyrie-6604.herokuapp.com/#/' + route, {
       query: query,
       'force new connection': true
     });
