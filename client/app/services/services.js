@@ -133,7 +133,7 @@ angular.module('battlescript.services', [])
   var createSocket = function(route, params) {
     console.log('attempt to create');
     var query = params.join('&');
-    return io.connect('https://vast-wildwood-2487.com/#/' + route, {
+    return io.connect('vast-wildwood-2487.herokuapp.com/#/' + route, {
       query: query,
       'force new connection': true
     });
