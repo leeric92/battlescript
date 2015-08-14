@@ -123,7 +123,7 @@ angular.module('battlescript.services', [])
 // 
 // A set of reusable functions to handle socket connections
 // inside various controllers
-////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
 
 .factory('Socket', function() {
 
