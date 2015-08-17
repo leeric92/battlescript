@@ -36,15 +36,17 @@ server.listen(process.env.PORT || 8000);
 // Declare io for the socket... Just creating an instance of the sokcet library
 var io = require('socket.io')(server);
 
+// set up two handlers for separate sockets
+var battleHandler = require('./config/battleHandler.js');
+var dashboardHandler = require('./config/dashboardHandler.js');
+
 io.on('connection', function(socket) {
   var handler = socket.handshake.query.handler;
   if (handler === 'dashboard') dashboardHandler(socket, io);
   if (handler === 'battle') battleHandler(socket, io);
 });
 
-// set up two handlers for separate sockets
-var battleHandler = require('./config/battleHandler.js');
-var dashboardHandler = require('./config/dashboardHandler.js');
+
 
 
 // For handling various sockets, goto socket battleHandler in config js
