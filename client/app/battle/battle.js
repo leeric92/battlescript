@@ -235,7 +235,7 @@ angular.module('battlescript.battle', [])
           $scope.battleDescription = marked($scope.battle.description);
           $scope.battleProjectId = $scope.battle.session.projectId;
           $scope.battleSolutionId = $scope.battle.session.solutionId;
-
+          $scope.exampleFixture = $scope.battle.session.exampleFixture;
           // update editors
           $timeout(function() {
             editor1.setValue($scope.battle.session.setup);
